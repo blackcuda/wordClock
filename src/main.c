@@ -6,46 +6,89 @@
  */ 
 
 #define F_CPU 16000000UL // 16MHz
-#define LED_AMOUNT 97
 
 #include <avr/io.h>
 #include <util/delay.h>
+#include <stdbool.h>
 //#include "light_ws2812.h"
+#include "util.h"
 #include "../modules/light_ws2812/light_ws2812_AVR/Light_WS2812/light_ws2812.h"
+#include "timetoled.h"
 
 
-struct cRGBW led[LED_AMOUNT];
+//struct cRGBW led[LED_AMOUNT];
 	
 int main(void)
 {
 	
-	DDRB = 0xFF;         //PB as output
-	PORTB= 0x00;         //keep all LEDs off
 	
+	// Get time
 	
+	//rtc_set_time_s(uint8_t hour, uint8_t min, uint8_t sec);
+	
+	// Parse time to LED's
+
+	struct cRGBW led[LED_AMOUNT];
+	
+	for (int i = 0; i < LED_AMOUNT ; i++)
+	{
+		led[i].r = 0;
+		led[i].g = 0;
+		led[i].b = 0;
+		led[i].w = 0;
+	}
+	
+	ws2812_setleds_rgbw(led, LED_AMOUNT);
+	
+		
     while (1) 
-    {			
-		for (int i = 0; i < LED_AMOUNT; i++)
+    {		
+		struct timeText t;	
+		t = timeToText();
+			
+		if (t.een)
 		{
-			led[i].r = 160;
-			led[i].g = 38;
-			led[i].b = 50;
-			
-			
-			ws2812_setleds_rgbw(led, LED_AMOUNT);
-			_delay_ms(10);
+			for(int i = 0 ; i < 1; i++)
+			{
+				led[i].r = 50;
+			}
 		}
 		
-		for (int i = 0; i < LED_AMOUNT; i++)
+		if (t.twee)
 		{
-			led[i].r = 0;
+			for(int i = 1; i < 2; i++)
+			{
+				led[i].r = 50;
+			}
+		}
+		
+		if (t.drie)
+		{
+			for(int i = 2; i < 3; i++)
+			{
+				led[i].r = 50;
+			}
+		}
+		
+		ws2812_setleds_rgbw(led, LED_AMOUNT);
+		
+		//textToLed(timeT);
+		
+		/*	
+		for (int i = 0; i < LED_AMOUNT ; i++)
+		{
+			led[i].r = 50;
 			led[i].g = 0;
 			led[i].b = 0;
-		}
-		
-		ws2812_setleds_rgbw(led, LED_AMOUNT);			
+			led[i].w = 0;
+			
+			ws2812_setleds_rgbw(led, LED_AMOUNT);
+			
+			led[i].r = 0;
+			
+			_delay_ms(100);
+		}	
+		*/
     }
 }
-
-
 
