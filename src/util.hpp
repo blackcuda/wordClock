@@ -1,0 +1,67 @@
+/*
+ * util.cpp
+ *
+ * Created: 6-4-2018 20:03:48
+ *  Author: Jeroen
+ */ 
+
+
+#ifndef UTIL_HPP
+#define UTIL_HPP
+
+#define LED_AMOUNT 92
+
+#define HET_LENGTH 3
+#define IS_LENGTH 2
+#define WAS_LENGTH 3
+#define VIJF_LENGTH 4
+#define TIEN_LENGTH 4
+#define KWART_LENGTH 5
+#define VOOR_LENGTH 4
+#define OVER_LENGTH 4
+#define PRECIES_LENGTH 7
+#define HALF_LENGTH 4
+#define EEN_UUR_LENGTH 3
+#define TWEE_UUR_LENGTH 4
+#define DRIE_UUR_LENGTH 4
+#define VIER_UUR_LENGTH 4
+#define VIJF_UUR_LENGTH 4
+#define ZES_UUR_LENGTH 3
+#define ZEVEN_UUR_LENGTH 5
+#define ACHT_UUR_LENGTH 4
+#define NEGEN_UUR_LENGTH 5
+#define TIEN_UUR_LENGTH 4
+#define ELF_UUR_LENGTH 3
+#define TWAALF_UUR_LENGTH 5
+#define UUR_LENGTH 3
+
+
+enum{
+	HET,
+	IS,
+	WAS,
+	VIJF,
+	TIEN,
+	KWART,
+	VOOR,
+	OVER,
+	PRECIES,
+	HALF,
+	ELF_UUR,
+	VIJF_UUR,
+	TWEE_UUR,
+	EEN_UUR,
+	VIER_UUR,
+	TIEN_UUR,
+	TWAALF_UUR,
+	DRIE_UUR,
+	NEGEN_UUR,
+	ACHT_UUR,
+	ZES_UUR,
+	ZEVEN_UUR,
+	UUR,
+	SEGMENT_AMOUNT
+};
+
+
+#endif

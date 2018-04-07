@@ -23,18 +23,17 @@ class segment{
 		// destructor
 		~segment();
 		
+		void setLenght (int aLength);
 		int getLength ();
 
 		void setColour (int red, int green, int blue, int white);
 		cRGBW getColour ();
-		
-		uint8_t getRed();
+
 		
 		void setSegmentOn();
 		void setSegmentOff();
 		
 		bool isSegmentOn();
-		bool isSegmentOff();
 		
 	private:
 	
@@ -42,6 +41,7 @@ class segment{
 		int length;
 
 		struct cRGBW word;
+		struct cRGBW wordOld;
 };	
 
 #endif
