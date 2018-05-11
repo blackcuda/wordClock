@@ -9,6 +9,8 @@
 #ifndef UTIL_HPP
 #define UTIL_HPP
 
+#define F_CPU 16000000UL // 16MHz 
+
 #define LED_AMOUNT 92
 
 #define HET_LENGTH 3
@@ -32,7 +34,7 @@
 #define NEGEN_UUR_LENGTH 5
 #define TIEN_UUR_LENGTH 4
 #define ELF_UUR_LENGTH 3
-#define TWAALF_UUR_LENGTH 5
+#define TWAALF_UUR_LENGTH 6
 #define UUR_LENGTH 3
 
 

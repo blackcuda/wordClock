@@ -2,3 +2,9 @@
 [submodule "modules/light_ws2812"]
 	path = modules/light_ws2812
 	url = https://github.com/cpldcpu/light_ws2812.git
+[submodule "ds_rtc_lib"]
+	path = ds_rtc_lib
+	url = https://github.com/blackcuda/ds_rtc_lib.git
+[submodule "modules/ds_rtc_lib"]
+	path = modules/ds_rtc_lib
+	url = https://github.com/blackcuda/ds_rtc_lib.git

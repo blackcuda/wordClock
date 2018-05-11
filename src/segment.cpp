@@ -10,7 +10,7 @@
 
 
 segment::segment()
-	:isOn(0),length(0), word()
+	:isOn(0),length(0), brightness(50), word()
 {
 		
 }
@@ -32,6 +32,11 @@ int segment::getLength()
 
 void segment::setColour(int red, int green, int blue, int white)
 {	
+	//red = red * brightness;
+	//green = green * brightness;
+	//blue = blue * brightness;
+	//white = white * brightness;
+	
 	if (isOn)
 	{
 		word.r = red;
@@ -63,17 +68,25 @@ void segment::setSegmentOn()
 
 void segment::setSegmentOff()
 {
-	isOn = false;
-	
-	wordOld = getColour();
+	if(isOn)
+	{
+		wordOld = getColour();
 		
-	word.r = 0;
-	word.g = 0;
-	word.b = 0;
-	word.w = 0;
+		word.r = 0;
+		word.g = 0;
+		word.b = 0;
+		word.w = 0;	
+		
+		isOn = false;
+	}
 }
 
 bool segment::isSegmentOn()
 {
 	return isOn;
+}
+
+void segment::setBrightness(const int aBrightness)
+{
+	brightness = aBrightness;
 }

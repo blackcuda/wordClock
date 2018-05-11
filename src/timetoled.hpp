@@ -12,36 +12,33 @@
 #include "../modules/light_ws2812/light_ws2812_AVR/Light_WS2812/light_ws2812.h"
 #include "util.hpp"
 
-struct timeText {
+struct timeText
+{
 	bool het;
 	bool is;
 	bool was;
-	bool vijfVoor;
-	bool tienVoor;
+	bool vijf;
+	bool tien;
 	bool kwart;
 	bool voor;
 	bool over;
 	bool precies;
 	bool half;
-	bool een;
-	bool twee;
-	bool drie;
-	bool vier;
-	bool vijf;
-	bool zes;
-	bool zeven;
-	bool acht;
-	bool negen;
-	bool tien;
-	bool elf;
-	bool twaalf;
+	bool eenUur;
+	bool tweeUur;
+	bool drieUur;
+	bool vierUur;
+	bool vijfUur;
+	bool zesUur;
+	bool zevenUur;
+	bool achtUur;
+	bool negenUur;
+	bool tienUur;
+	bool elfUur;
+	bool twaalfUur;
 	bool uur;
 };
 
-struct timeText timeToSegment();
-void textToLed (struct timeText t);
-
-//void setSegmentOn (struct segment);
-//void setSegmentOff (struct segment);
+// struct timeText timeToSegment();
 
 #endif /* TIMETOLED_H_ */

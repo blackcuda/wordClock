@@ -12,22 +12,33 @@
 #include "util.hpp"
 #include "segment.hpp"
 #include "timetoled.hpp"
+#include "timeclock.hpp"
 
 class light
 {	
 	public:	
+		// Constructor
 		light();
+		
+		// Destructor
 		~light();
 		
 		void setLight();	
-		void setBrightness(int aBrightness);	
+		void setSegments(timeText aTimeText);
+		void setBrightness(const int aBrightness);	
 		void setLightOn();
 		void setLightOff();
-	
+		
+		void update();
+		
 	private:	
 		cRGBW led[LED_AMOUNT];
 		segment aSegment[SEGMENT_AMOUNT];
-		int brightness;
+					
+		timeText theTimeText = {};
+			
+		timeClock theTimeClock = {};
+			
 };
 
 #endif /* LIGHT_HPP_ */

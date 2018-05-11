@@ -8,7 +8,7 @@
 #include "light.hpp"
 
 light::light()
-	:led(), aSegment(), brightness(0)
+	:led(), aSegment()
 {
 	aSegment[HET].setLenght(HET_LENGTH);
 	aSegment[IS].setLenght(IS_LENGTH);
@@ -34,22 +34,30 @@ light::light()
 	aSegment[TWAALF_UUR].setLenght(TWAALF_UUR_LENGTH);
 	aSegment[UUR].setLenght(UUR_LENGTH);
 	
-	for(int i = 0; i < SEGMENT_AMOUNT; i++)
-	{
-		aSegment[i].setSegmentOn();
-	}
+// 	for(int i = 0; i < SEGMENT_AMOUNT; i++)
+// 	{
+// 		aSegment[i].setSegmentOn();
+// 	}
+	
+	//setBrightness(40);
 	
 	for(int i = 0; i < SEGMENT_AMOUNT; i++)
 	{
 		if(i%2 == 0)
-		aSegment[i].setColour(0,20,0,0);
+		{
+			aSegment[i].setColour(0,250,0,0);
+		}
 		else
 		{
-			aSegment[i].setColour(0,0,20,0);
+			aSegment[i].setColour(0,0,250,0);
 		}
 	}
 
-	setLight();
+//	theTimeText = theTimeClock.parseTime();
+	
+//	setSegments(theTimeText);
+	
+//	setLight();
 }
 
 light::~light()
@@ -76,7 +84,7 @@ void light::setLight()
 
 void light::setLightOn()
 {
-	setBrightness(255);
+	setBrightness(100);
 }
 
 void light::setLightOff()
@@ -84,8 +92,147 @@ void light::setLightOff()
 	setBrightness(0);
 }
 
-void light::setBrightness(int aBrightness)
-{
-	brightness = aBrightness;	
+void light::setBrightness(const int aBrightness)
+{	
+	for(int i = 0; i < SEGMENT_AMOUNT; i++)
+	{
+		aSegment[i].setBrightness(aBrightness);
+	}
 }
 
+void light::setSegments(timeText aTimeText)
+{	
+	for(int i = 0; i < SEGMENT_AMOUNT; i++)
+	{
+		aSegment[i].setSegmentOff();	
+	}
+	
+	if(aTimeText.het)
+	{
+		aSegment[HET].setSegmentOn();	
+	}
+	
+	if(aTimeText.is)
+	{
+		aSegment[IS].setSegmentOn();
+	}
+	
+	if(aTimeText.was)
+	{
+		aSegment[WAS].setSegmentOn();
+	}
+	
+	if(aTimeText.vijf)
+	{
+		aSegment[VIJF].setSegmentOn();
+	}
+	
+	if(aTimeText.tien)
+	{
+		aSegment[TIEN].setSegmentOn();
+	}
+	
+	if(aTimeText.kwart)
+	{
+		aSegment[KWART].setSegmentOn();
+	}
+		
+	if(aTimeText.voor)
+	{
+		aSegment[VOOR].setSegmentOn();
+	}
+	
+	if(aTimeText.over)
+	{
+		aSegment[OVER].setSegmentOn();
+	}
+	
+	if(aTimeText.precies)
+	{
+		aSegment[PRECIES].setSegmentOn();
+	}
+					
+	if(aTimeText.half)
+	{
+		aSegment[HALF].setSegmentOn();
+	}
+	
+	if(aTimeText.eenUur)
+	{
+		aSegment[EEN_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.tweeUur)
+	{
+		aSegment[TWEE_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.drieUur)
+	{
+		aSegment[DRIE_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.vierUur)
+	{
+		aSegment[VIER_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.vijfUur)
+	{
+		aSegment[VIJF_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.zesUur)
+	{
+		aSegment[ZES_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.zevenUur)
+	{
+		aSegment[ZEVEN_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.achtUur)
+	{
+		aSegment[ACHT_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.negenUur)
+	{
+		aSegment[NEGEN_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.tienUur)
+	{
+		aSegment[TIEN_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.elfUur)
+	{
+		aSegment[ELF_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.twaalfUur)
+	{
+		aSegment[TWAALF_UUR].setSegmentOn();
+	}
+	
+	if(aTimeText.uur)
+	{
+		aSegment[UUR].setSegmentOn();
+	}	
+}
+
+
+
+void light::update()
+{
+	timeText aTimeText;
+	
+	aTimeText = theTimeClock.parseTime(theTimeClock.getTime());
+
+	setSegments(aTimeText);
+	
+	setLight();
+
+}

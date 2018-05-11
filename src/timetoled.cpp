@@ -9,192 +9,113 @@
 
 
 
-struct timeText timeToSegment ()
-{
-	
-	int min = 0;
-	int hour = 1;
-	
-	struct timeText  timeT;
-	
-	timeT.het = 1;
-	timeT.is = 1;
-
-	if (min == 0 || min == 30)
-	{
-		timeT.precies = 1;
-	}
-	
-	if (min == 15 || min == 45)
-	{
-		timeT.kwart = 1;
-	}
-	
-	if (min >= 20)
-	{
-		hour ++;
-	}
-	
-	switch(hour) {
-		case 1 :
-			timeT.een = 1;
-			break;
-		case 2 :
-			timeT.twee = 1;
-			break;
-		case 3 :
-			timeT.drie = 1;
-			break;
-		case 4 :
-			timeT.vier = 1;
-			break;
-		case 5 :
-			timeT.vijf = 1;
-			break;
-		case 6 :
-			timeT.zes = 1;
-			break;
-		case 7 :
-			timeT.zeven = 1;
-			break;
-		case 8 :
-			timeT.acht = 1;
-			break;
-		case 9 :
-			timeT.negen = 1;
-			break;
-		case 10 :
-			timeT.tien = 1;
-			break;
-		case 11 :
-			timeT.elf = 1;
-			break;
-		case 12 :
-			timeT.twaalf = 1;
-			break;
-	}
-		
-	return timeT;
-}
-
-struct cRGBW led[LED_AMOUNT];
-	
-void textToLed(struct timeText t)
-{
-	//segment het_segment;
-	
-//	het_segment.setColour(10,10,10,10);
-	
-	
-	/*
-	for(int i = 0; i < SEGMENT_AMOUNT; i++)
-	{
-		// IF the segment should be on 
-		//if ()
-			setSegmentOn(hetSegment);
-	}
-	*/
-/*
-	if (t.het)
-	{
-		for(int i = HET_LOW ; i <= HET_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.is)
-	{
-		for(int i = IS_LOW ; i <= IS_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.was)
-	{
-		for(int i = WAS_LOW ; i <= WAS_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.vijfVoor)
-	{
-		for(int i = VIJF_LOW ; i <= VIJF_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.tienVoor)
-	{
-		for(int i = TIEN_LOW ; i <= TIEN_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.kwart)
-	{
-		for(int i = KWART_LOW ; i <= KWART_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.voor)
-	{
-		for(int i = KWART_LOW ; i <= KWART_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.kwart)
-	{
-		for(int i = KWART_LOW ; i <= KWART_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.kwart)
-	{
-		for(int i = KWART_LOW ; i <= KWART_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.kwart)
-	{
-		for(int i = KWART_LOW ; i <= KWART_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-	
-	if (t.kwart)
-	{
-		for(int i = KWART_LOW ; i <= KWART_HIGH; i++)
-		{
-			led[i].r = 50;
-		}
-	}
-*/
-	ws2812_setleds_rgbw(led, LED_AMOUNT);
-}
-
-/*
-void setSegmentOn(struct segment)
-{		
-	for(int i = segment. ; i <=  	segmen;; i++)
-	{
-		led[i].r = 50;
-	}
-}
-*/
+// timeText timeToSegment()
+// {
+// 	int hour = 6;
+// 	int min = 27;
+// 	
+// 	timeText timeT = {};
+// 	
+// 	timeT.het = true;
+// 	
+// 	if((min % 5) == 0)
+// 	{
+// 		timeT.is = true;
+// 	}
+// 	else
+// 	{
+// 		timeT.was = true;
+// 	}
+// 
+// 	if (min == 0 || min == 30 )
+// 	{
+// 		timeT.precies = true;
+// 	}
+// 	
+// 	int remainder = min % 5;
+// 	min = min - remainder;
+// 	
+// 	if (min == 0)
+// 	{
+// 		timeT.uur = true;
+// 	}
+// 	
+// 	if (min == 5 || min == 25 || min == 35 || min == 55)
+// 	{
+// 		timeT.vijf = true;
+// 	}
+// 	
+// 	if (min == 10 || min == 20 || min == 40 || min == 50)
+// 	{
+// 		timeT.tien = true;
+// 	}
+// 	
+// 	if (min == 15 || min == 45)
+// 	{
+// 		timeT.kwart = true;
+// 	}
+// 	
+// 	if (min == 5 || min == 10 || min == 15 || min == 35 || min == 40)
+// 	{
+// 		timeT.over = true;
+// 	}
+// 	
+// 	if (min == 20 || min == 25 || min == 45 || min == 50 || min == 55)
+// 	{
+// 		timeT.voor = true;
+// 	}
+// 	
+// 	if (min == 20 || min == 25 || min == 30 || min == 35 || min == 40)
+// 	{
+// 		timeT.half = true;
+// 	}
+// 	
+// 	if (min >= 20)
+// 	{
+// 		hour ++;
+// 	}
+// 	
+// 	switch(hour) {
+// 		case 1 :
+// 			timeT.eenUur = true;
+// 			break;
+// 		case 2 :
+// 			timeT.tweeUur = true;
+// 			break;
+// 		case 3 :
+// 			timeT.drieUur = true;
+// 			break;
+// 		case 4 :
+// 			timeT.vierUur = true;
+// 			break;
+// 		case 5 :
+// 			timeT.vijfUur = true;
+// 			break;
+// 		case 6 :
+// 			timeT.zesUur = true;
+// 			break;
+// 		case 7 :
+// 			timeT.zevenUur = true;
+// 			break;
+// 		case 8 :
+// 			timeT.achtUur = true;
+// 			break;
+// 		case 9 :
+// 			timeT.negenUur = true;
+// 			break;
+// 		case 10 :
+// 			timeT.tienUur = true;
+// 			break;
+// 		case 11 :
+// 			timeT.elfUur = true;
+// 			break;
+// 		case 12 :
+// 			timeT.twaalfUur = true;
+// 			break;
+// 	}
+// 		
+// 	return timeT;
+// }
 
 
 

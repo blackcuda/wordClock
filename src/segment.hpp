@@ -35,10 +35,13 @@ class segment{
 		
 		bool isSegmentOn();
 		
+		void setBrightness(const int brightness);
+		
 	private:
 	
 		bool isOn;
 		int length;
+		int brightness;
 
 		struct cRGBW word;
 		struct cRGBW wordOld;
