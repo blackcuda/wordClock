@@ -100,6 +100,56 @@ void light::setBrightness(const int aBrightness)
 	}
 }
 
+void light::changeColour()
+{
+	int red = 0;
+	int green = 0;
+	int blue = 0;
+	int white = 0;
+	
+	switch(colour) {
+		case 0 :
+			red = 250;
+			break;
+		case 1 :
+			green = 250;
+			break;
+		case 2 :
+			blue = 250;
+			break;
+		case 3 :
+			white = 250;
+			break;
+		case 4 :
+			red = 125;
+			green = 125;
+			break;
+		case 5 :
+			red = 125;
+			blue = 125;
+			break;
+		case 6 :
+			green = 125;
+			blue = 125;
+			break;	
+	}
+	
+	setColour(red, green, blue, white);
+	colour++;
+	if (colour > 6)
+	{
+		colour = 0;
+	}
+}
+
+void light::setColour(int red, int green, int blue, int white)
+{
+	for(int i = 0; i < SEGMENT_AMOUNT; i++)
+	{
+		aSegment[i].setColour(red, green, blue, white);
+	}
+}
+
 void light::setSegments(timeText aTimeText)
 {	
 	for(int i = 0; i < SEGMENT_AMOUNT; i++)
@@ -234,5 +284,4 @@ void light::update()
 	setSegments(aTimeText);
 	
 	setLight();
-
 }

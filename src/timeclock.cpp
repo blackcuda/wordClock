@@ -42,22 +42,22 @@ timeText timeClock::parseTime(tm* aTime)
 	int min = aTime->min;
 	int second = aTime->sec;
 
-	char bufSec[10];
-	char bufMin[10];
-	char bufHour[10];
-			
-	itoa(hour, bufHour, 10);
-	itoa(min, bufMin, 10);
-	itoa(second, bufSec, 10);
-			
-	uartSendByte(bufHour[0]);
-	uartSendByte(bufHour[1]);
-	uartSendString(":");
-	uartSendByte(bufMin[0]);
-	uartSendByte(bufMin[1]);
-	uartSendString(":");
-	uartSendByte(bufSec[0]);
-	uartSendByte(bufSec[1]);
+// 	char bufSec[10];
+// 	char bufMin[10];
+// 	char bufHour[10];
+// 			
+// 	itoa(hour, bufHour, 10);
+// 	itoa(min, bufMin, 10);
+// 	itoa(second, bufSec, 10);
+// 			
+// 	uartSendByte(bufHour[0]);
+// 	uartSendByte(bufHour[1]);
+// 	uartSendString(":");
+// 	uartSendByte(bufMin[0]);
+// 	uartSendByte(bufMin[1]);
+// 	uartSendString(":");
+// 	uartSendByte(bufSec[0]);
+// 	uartSendByte(bufSec[1]);
 	
 	timeText timeT = {};
 		

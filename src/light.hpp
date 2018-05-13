@@ -28,6 +28,8 @@ class light
 		void setBrightness(const int aBrightness);	
 		void setLightOn();
 		void setLightOff();
+		void setColour(int red, int green, int blue, int white);
+		void changeColour();
 		
 		void update();
 		
@@ -38,6 +40,8 @@ class light
 		timeText theTimeText = {};
 			
 		timeClock theTimeClock = {};
+			
+		int colour = 0;
 			
 };
 
