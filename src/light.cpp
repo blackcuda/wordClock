@@ -45,11 +45,11 @@ light::light()
 	{
 		if(i%2 == 0)
 		{
-			aSegment[i].setColour(0,250,0,0);
+			aSegment[i].setColour(0,25,0,0);
 		}
 		else
 		{
-			aSegment[i].setColour(0,0,250,0);
+			aSegment[i].setColour(0,0,25,0);
 		}
 	}
 
@@ -74,7 +74,7 @@ void light::setLight()
 	{
 		for(j = ledIndex; j < ledIndex + aSegment[i].getLength(); j++)
 		{
-			led[j] = aSegment[i].getColour();
+			led[j] = aSegment[i].getOutput();
 		}
 		ledIndex = j;
 	}
@@ -129,14 +129,26 @@ void light::changeColour()
 			blue = 125;
 			break;
 		case 6 :
+			green = 16;
+			blue = 16;
+			break;	
+		case 7 :
+			green = 31;
+			blue = 31;
+			break;
+		case 8 :
 			green = 125;
 			blue = 125;
-			break;	
+			break;
+		case 9 :
+			green = 250;
+			blue = 250;
+		break;
 	}
 	
 	setColour(red, green, blue, white);
 	colour++;
-	if (colour > 6)
+	if (colour > 9)
 	{
 		colour = 0;
 	}
@@ -274,12 +286,21 @@ void light::setSegments(timeText aTimeText)
 }
 
 
+int k = 0;
 
 void light::update()
 {
 	timeText aTimeText;
 	
 	aTimeText = theTimeClock.parseTime(theTimeClock.getTime());
+	
+	if (k > 10)
+	{
+		k = 0;
+	}
+	setBrightness(k);
+	
+	k++;
 
 	setSegments(aTimeText);
 	

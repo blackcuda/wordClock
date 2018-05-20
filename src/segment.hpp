@@ -25,14 +25,15 @@ class segment{
 		
 		void setLenght (int aLength);
 		int getLength ();
+		
+		void setOutput ();
+		cRGBW getOutput ();
 
 		void setColour (int red, int green, int blue, int white);
 		cRGBW getColour ();
 
-		
 		void setSegmentOn();
 		void setSegmentOff();
-		
 		bool isSegmentOn();
 		
 		void setBrightness(const int brightness);
@@ -43,8 +44,8 @@ class segment{
 		int length;
 		int brightness;
 
+		struct cRGBW colour;
 		struct cRGBW word;
-		struct cRGBW wordOld;
 };	
 
 #endif

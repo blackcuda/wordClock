@@ -5,8 +5,6 @@
  * Author : Jeroen
  */ 
 
-
-
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include <stdio.h>
@@ -105,7 +103,6 @@ int main(void)
 	
 	timeClock theClock;
 	light clockLight;
-
 				
 	//struct tm* theTime = NULL;
 	//rtc_set_time_s(17, 49, 40);
@@ -118,30 +115,7 @@ int main(void)
 			
 			clockLight.update();
 
-// 			theTime = theClock.getTime();
-// 				 	
-// 			int second = theTime->sec;
-// 			int minute = theTime->min;
-// 			int hour = theTime->hour;
-// 			char bufSec[10];
-// 			char bufMin[10];
-// 			char bufHour[10];
-// 		
-// 			itoa(second, bufSec, 10);
-// 			itoa(minute, bufMin, 10);
-// 			itoa(hour, bufHour, 10);
-		 
-			//uartSendString("hello world \n");
-// 			uartSendByte(bufHour[0]);
-// 			uartSendByte(bufHour[1]);
-// 			uartSendString(":");
-// 			uartSendByte(bufMin[0]);
-// 			uartSendByte(bufMin[1]);
-// 			uartSendString(":");
-// 			uartSendByte(bufSec[0]);
-// 			uartSendByte(bufSec[1]);
-
-		//	uartSendString("ADC Value: ");
+//			uartSendString("ADC Value: ");
 			
 // 			char digitArray[3];
 // 			int henk = 101;
@@ -178,7 +152,15 @@ int main(void)
 		{
 			button3Pressed = false;
 			
-			clockLight.changeColour();
+			tm* presentTime;
+			
+			presentTime = theClock.getTime();
+			
+			uint8_t presentHour = presentTime->twelveHour;
+			uint8_t presentMinute = presentTime->min;
+			uint8_t presentSecond = presentTime->sec;
+			
+			rtc_set_time_s(presentHour, presentMinute + 1, presentSecond);
 		}
 	
 	//	_delay_ms(10);
@@ -213,7 +195,7 @@ bool button3_in = false;
 
 ISR(PCINT0_vect)
 {		
-	uint8_t changedBits = PINB ^portbHistory;
+	uint8_t changedBits = PINB ^ portbHistory;
 	portbHistory = PINB;
 	
 	if(changedBits & (1 << PINB0)) //PCINT0 changed
