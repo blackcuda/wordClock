@@ -23,6 +23,7 @@ class light
 		// Destructor
 		~light();
 		
+		void init();
 		void setLight();	
 		void setSegments(timeText aTimeText);
 		void setBrightness(const int aBrightness);	
@@ -33,7 +34,9 @@ class light
 		
 		void update();
 		
-	private:	
+	private:
+		
+		void startUpCycle();
 		cRGBW led[LED_AMOUNT];
 		segment aSegment[SEGMENT_AMOUNT];
 					
@@ -42,7 +45,7 @@ class light
 		timeClock theTimeClock = {};
 			
 		int colour = 0;
-			
+		uint16_t m_brightness;			
 };
 
 #endif /* LIGHT_HPP_ */

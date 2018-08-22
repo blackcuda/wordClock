@@ -76,7 +76,7 @@ bool newADCValue;
 bool button1Pressed = false;
 bool button2Pressed = false;
 bool button3Pressed = false;
-uint8_t valueADC;
+uint16_t valueADC;
 volatile uint8_t portbHistory = 0xFF;     // default is high because the pull-up
 
 int main(void)
@@ -103,9 +103,6 @@ int main(void)
 	
 	timeClock theClock;
 	light clockLight;
-				
-	//struct tm* theTime = NULL;
-	//rtc_set_time_s(17, 49, 40);
 	
     while (1) 
     {
@@ -113,17 +110,23 @@ int main(void)
 		{
 			callClockTime = false;
 			
+			int lightSensorValue = (int)((double)valueADC / 255 * 10);
+			
+			clockLight.setBrightness(lightSensorValue);
 			clockLight.update();
 
-//			uartSendString("ADC Value: ");
-			
-// 			char digitArray[3];
-// 			int henk = 101;
-// 			itoa(valueADC, digitArray, 10);
-//  			uartSendByte(digitArray[0]);
-//  			uartSendByte(digitArray[1]);
-//  			uartSendByte(digitArray[2]);
-// 			uartSendString("\n\r");
+ 			char digitArray[4];
+			 
+			digitArray[0] = 0;
+			digitArray[1] = 0;
+			digitArray[2] = 0;
+			digitArray[3] = 0;
+				 
+ 			itoa(lightSensorValue, digitArray, 10);
+  			uartSendByte(digitArray[0]);
+  			uartSendByte(digitArray[1]);
+  			uartSendByte(digitArray[2]);
+ 			uartSendString("\n");
 		}
 		
 		if(button1Pressed)
@@ -175,6 +178,7 @@ ISR(TIMER1_COMPA_vect) {
 ISR(ADC_vect)
 {
 	newADCValue = true;
+	
 	valueADC = ADCH;
 	
 // 	tmp = ADMUX; // Read the value of the ADMUX register.

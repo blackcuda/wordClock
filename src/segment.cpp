@@ -32,7 +32,7 @@ int segment::getLength()
 
 void segment::setOutput()
 {
-	word.r = colour.r * brightness * isOn;
+	word.r = colour.r * brightness * isOn; // colour is 0 / 25, brightness is 1 / 10, isOn is 0 / 1.
 	word.g = colour.g * brightness * isOn;
 	word.b = colour.b * brightness * isOn;
 	word.w = colour.w * brightness * isOn;
@@ -75,7 +75,14 @@ bool segment::isSegmentOn()
 
 void segment::setBrightness(const int aBrightness)
 {
-	brightness = aBrightness;
+	if(aBrightness < 1)
+	{
+		brightness = 1;
+	} 
+	else
+	{
+		brightness = aBrightness;
+	}
 	
 	setOutput();
 }

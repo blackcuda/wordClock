@@ -34,12 +34,20 @@ light::light()
 	aSegment[TWAALF_UUR].setLenght(TWAALF_UUR_LENGTH);
 	aSegment[UUR].setLenght(UUR_LENGTH);
 	
-// 	for(int i = 0; i < SEGMENT_AMOUNT; i++)
-// 	{
-// 		aSegment[i].setSegmentOn();
-// 	}
+	init();
+}
+
+light::~light()
+{
 	
-	//setBrightness(40);
+}
+
+void light::init()
+{	
+	startUpCycle();
+	
+	
+	// TODO read color from non-volatile memory	
 	
 	for(int i = 0; i < SEGMENT_AMOUNT; i++)
 	{
@@ -52,17 +60,6 @@ light::light()
 			aSegment[i].setColour(0,0,25,0);
 		}
 	}
-
-//	theTimeText = theTimeClock.parseTime();
-	
-//	setSegments(theTimeText);
-	
-//	setLight();
-}
-
-light::~light()
-{
-	
 }
 
 void light::setLight()
@@ -109,46 +106,30 @@ void light::changeColour()
 	
 	switch(colour) {
 		case 0 :
-			red = 250;
+			red = 25;
 			break;
 		case 1 :
-			green = 250;
+			green = 25;
 			break;
 		case 2 :
-			blue = 250;
+			blue = 25;
 			break;
 		case 3 :
-			white = 250;
+			white = 25;
 			break;
 		case 4 :
-			red = 125;
-			green = 125;
+			red = 13;
+			green = 13;
 			break;
 		case 5 :
-			red = 125;
-			blue = 125;
+			red = 13;
+			blue = 13;
 			break;
-		case 6 :
-			green = 16;
-			blue = 16;
-			break;	
-		case 7 :
-			green = 31;
-			blue = 31;
-			break;
-		case 8 :
-			green = 125;
-			blue = 125;
-			break;
-		case 9 :
-			green = 250;
-			blue = 250;
-		break;
 	}
 	
 	setColour(red, green, blue, white);
 	colour++;
-	if (colour > 9)
+	if (colour > 6)
 	{
 		colour = 0;
 	}
@@ -285,24 +266,18 @@ void light::setSegments(timeText aTimeText)
 	}	
 }
 
-
-int k = 0;
-
 void light::update()
 {
 	timeText aTimeText;
 	
 	aTimeText = theTimeClock.parseTime(theTimeClock.getTime());
 	
-	if (k > 10)
-	{
-		k = 0;
-	}
-	setBrightness(k);
-	
-	k++;
-
 	setSegments(aTimeText);
 	
 	setLight();
+}
+
+void light::startUpCycle()
+{
+
 }
