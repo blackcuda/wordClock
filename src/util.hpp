@@ -37,6 +37,11 @@
 #define TWAALF_UUR_LENGTH 6
 #define UUR_LENGTH 3
 
+enum systemStates{
+	STARTUP_STATE,
+	CLOCK_STATE,
+	MAX_STATE_AMOUNT
+};
 
 enum{
 	HET,

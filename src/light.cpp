@@ -125,6 +125,10 @@ void light::changeColour()
 			red = 13;
 			blue = 13;
 			break;
+		case 6 :
+			green = 13;
+			blue = 13;
+			break;
 	}
 	
 	setColour(red, green, blue, white);

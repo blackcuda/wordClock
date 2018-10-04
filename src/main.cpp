@@ -25,12 +25,28 @@ extern "C"{
 	#include "../modules/ds_rtc_lib/library-gcc/test/uart.h"
 }
 
+void timer0_init()
+{
+	OCR0A = 0xFF;
+	//TCNT0 = 0x00; // Reset the count value.
+	
+	TCCR0A |= (1 << WGM01);
+	// Mode 2, CTC on OCR0A (clear timer on compare match)
+	
+	TIMSK0 |= (1 << OCIE0A);
+	// Set interrupt on overflow
+	
+	TCCR0B |= (1 << CS02); // prescaler = 256.
+		
+	sei();
+}
+
 void timer1_init()
 {
 	OCR1A = 0x3D08;
 	
 	TCCR1B |= (1 << WGM12);
-	// Mode 4, CTC on OCR1A
+	// Mode 4, CTC on OCR1A (clear timer on compare match)
 	
 	TIMSK1 |= (1 << OCIE1A);
 	// Set interrupt on compare match
@@ -60,6 +76,12 @@ void adc1_init()
 	sei();
 }
 
+void pins_init()
+{
+	DDRB &= ~((1 << DDB0) | (1 << DDB1) | (1 << DDB3)); // PB0,PB1,PB3 (PCINT0, PCINT1, PCINT2 pin) are now inputs.
+	PORTB |= ((1 << PORTB0) | (1 << PORTB1) | (1 << PORTB3)); // PB0, PB1 and PB3 are now inputs with pull-up enabled.
+}
+
 void pinChange_init()
 {
 	DDRB &= ~((1 << DDB0) | (1 << DDB1) | (1 << DDB3)); // PB0,PB1,PB2 (PCINT0, PCINT1, PCINT2 pin) are now inputs.
@@ -72,40 +94,48 @@ void pinChange_init()
 }
 
 bool callClockTime;
+bool newTimer;
 bool newADCValue;
+
 bool button1Pressed = false;
 bool button2Pressed = false;
 bool button3Pressed = false;
+
 uint16_t valueADC;
 volatile uint8_t portbHistory = 0xFF;     // default is high because the pull-up
 
 int main(void)
 {
-	//DDRB  = 0xFF;
-	//PORTB &= (1<<5);
-
+	pins_init();
+	timer0_init();
 	timer1_init();
 	uartInit(); // init uart
 	adc1_init();
-	pinChange_init();
-	
- 	struct cRGBW led[LED_AMOUNT];
-			
-	for (int i = 0; i < LED_AMOUNT; i++)
-	{
-		led[i].r = 0;
-		led[i].g = 0;
-		led[i].b = 0;
-		led[i].w = 0;
-	}
-	
-	ws2812_setleds_rgbw(led, LED_AMOUNT);
+	//pinChange_init();
 	
 	timeClock theClock;
 	light clockLight;
 	
+	systemStates currentState = STARTUP_STATE;
+	
+	uint8_t pinB0PreviousReading = 0;
+	uint8_t pinB1PreviousReading = 0;
+	uint8_t pinB3PreviousReading = 0;
+	
     while (1) 
     {
+		switch(currentState)
+		{
+			case STARTUP_STATE:
+				
+				break;
+			case CLOCK_STATE:
+			
+				break;
+			default: 
+				break;
+		}
+		
  		if(callClockTime)
 		{
 			callClockTime = false;
@@ -115,28 +145,98 @@ int main(void)
 			clockLight.setBrightness(lightSensorValue);
 			clockLight.update();
 
- 			char digitArray[4];
+ 			//char digitArray[4];
 			 
-			digitArray[0] = 0;
-			digitArray[1] = 0;
-			digitArray[2] = 0;
-			digitArray[3] = 0;
-				 
+			//digitArray[0] = 0;
+			//digitArray[1] = 0;
+			//digitArray[2] = 0;
+			//digitArray[3] = 0;
+
+/*				 
  			itoa(lightSensorValue, digitArray, 10);
   			uartSendByte(digitArray[0]);
   			uartSendByte(digitArray[1]);
   			uartSendByte(digitArray[2]);
  			uartSendString("\n");
+			 */
+			//uartSendString("call clockTimer \n");
+
+		}
+		
+		if(newTimer)
+		{			
+			//uint8_t pinMask = (1 << PINB0) | (1 << PINB1) | (1 << PINB3); // Mask for PINB0, PINB1, PINB3
+			
+			// when the state differs from the previous state. 
+			uint8_t pinB0State = (~PINB) & (1 << PINB0); // the state can only be high for the pins in the pinmask.
+			uint8_t pinB1State = (~PINB) & (1 << PINB1); // the state can only be high for the pins in the pinmask.
+			uint8_t pinB3State = (~PINB) & (1 << PINB3); // the state can only be high for the pins in the pinmask.
+			
+			// pinstate shiften & met PINB3 daarna shiften met PINB3 naar rechts. Als 1 deze waarde niet gelijk is 
+
+			if((pinB0State != pinB0PreviousReading) && (pinB0PreviousReading == (1 << PINB0)))
+			{				
+				if(!button1Pressed)
+				{	
+					button1Pressed = true;
+				}
+				else
+				{
+					button1Pressed = false;
+				}
+			}
+			
+			if((pinB1State != pinB1PreviousReading) && (pinB1PreviousReading == (1 << PINB1)))
+			{
+				if(!button2Pressed)
+				{
+					button2Pressed = true;
+				}
+				else
+				{
+					button2Pressed = false;
+				}
+			}
+			
+			if((pinB3State != pinB3PreviousReading) && (pinB3PreviousReading == (1 << PINB3)))
+			{
+				if(!button3Pressed)
+				{
+					button3Pressed = true;
+				}
+				else
+				{
+					button3Pressed = false;
+				}
+			}
+			
+			pinB0PreviousReading = pinB0State;
+			pinB1PreviousReading = pinB1State;
+			pinB3PreviousReading = pinB3State;
+			
+			newTimer = false;
 		}
 		
 		if(button1Pressed)
 		{
 			button1Pressed = false;
 			
+			//char digitArray[2];
+						
+			//digitArray[0] = 0;
+			//digitArray[1] = 0;
+			
+			//itoa(button1Counter, digitArray, 10);
+			uartSendString("counter = ");
+			//uartSendString(digitArray);
+			uartSendString("\r\n");
+			uartSendString("Color changed \n");
+			
 			clockLight.changeColour();
 		}
 		
-		if(button2Pressed)
+		
+/*		if(button2Pressed)
 		{
 			button2Pressed = false;
 			
@@ -165,14 +265,17 @@ int main(void)
 			
 			rtc_set_time_s(presentHour, presentMinute + 1, presentSecond);
 		}
-	
-	//	_delay_ms(10);
+		*/
+
 	}
 }
 
-
 ISR(TIMER1_COMPA_vect) {
 	callClockTime = true;
+}
+
+ISR(TIMER0_COMPA_vect) {
+	newTimer = true;
 }
 
 ISR(ADC_vect)
@@ -188,15 +291,16 @@ ISR(ADC_vect)
 // 	
 // 	if(tmp == 0)
 // 	{
-// 		// 
+//  
 // 	}
 }
 
 
-bool button1_in = false;
-bool button2_in = false;
-bool button3_in = false;
+//bool button1_in = false;
+//bool button2_in = false;
+//bool button3_in = false;
 
+/*
 ISR(PCINT0_vect)
 {		
 	uint8_t changedBits = PINB ^ portbHistory;
@@ -241,3 +345,4 @@ ISR(PCINT0_vect)
 		}
 	}
 }
+*/
