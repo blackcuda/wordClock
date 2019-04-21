@@ -112,9 +112,9 @@ int main(void)
 	uartInit(); // init uart
 	adc1_init();
 	//pinChange_init();
-	
+
+	light theLight;
 	timeClock theClock;
-	light clockLight;
 	
 	systemStates currentState = STARTUP_STATE;
 	
@@ -142,8 +142,8 @@ int main(void)
 			
 			int lightSensorValue = (int)((double)valueADC / 255 * 10);
 			
-			clockLight.setBrightness(lightSensorValue);
-			clockLight.update();
+			theLight.setBrightness(lightSensorValue);
+			theLight.update();
 
  			//char digitArray[4];
 			 
@@ -232,11 +232,11 @@ int main(void)
 			uartSendString("\r\n");
 			uartSendString("Color changed \n");
 			
-			clockLight.changeColour();
+			theLight.changeColour();
 		}
 		
 		
-/*		if(button2Pressed)
+		if(button2Pressed)
 		{
 			button2Pressed = false;
 			
@@ -265,8 +265,6 @@ int main(void)
 			
 			rtc_set_time_s(presentHour, presentMinute + 1, presentSecond);
 		}
-		*/
-
 	}
 }
 
