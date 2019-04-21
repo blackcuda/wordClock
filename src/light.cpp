@@ -105,27 +105,32 @@ void light::changeColour()
 	int white = 0;
 	
 	switch(colour) {
-		case 0 :
+		case 0:
 			red = 25;
 			break;
-		case 1 :
+		case 1:
 			green = 25;
 			break;
-		case 2 :
+		case 2:
 			blue = 25;
 			break;
-		case 3 :
+		case 3:
 			white = 25;
 			break;
-		case 4 :
+		case 4:
 			red = 13;
 			green = 13;
 			break;
-		case 5 :
+		case 5:
 			red = 13;
 			blue = 13;
 			break;
-		case 6 :
+		case 6:
+			green = 13;
+			blue = 13;
+			break;
+		case 7:
+			red = 13;
 			green = 13;
 			blue = 13;
 			break;
@@ -133,7 +138,7 @@ void light::changeColour()
 	
 	setColour(red, green, blue, white);
 	colour++;
-	if (colour > 6)
+	if (colour > 7)
 	{
 		colour = 0;
 	}
